@@ -17,7 +17,7 @@ after_success:
 
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  - docker push speedforce/multi-client
-  - docker push speedforce/multi-nginx
-  - docker push speedforce/multi-server
-  - docker push speedforce/multi-worker
+  - docker push speedforce7/multi-client
+  - docker push speedforce7/multi-nginx
+  - docker push speedforce7/multi-server
+  - docker push speedforce7/multi-worker
