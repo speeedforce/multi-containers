@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_require:
+  - docker build -t speedforce/react-test -f Dockerfile.dev ./client/Dockerfile.dev ./client
+
+script:
+  - docker run speedforce/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t speedforce/multi-client ./client
+  - docker build -t speedforce/multi-nginx ./nginx
+  - docker build -t speedforce/multi-server ./server
+  - docker build -t speedforce/multi-worker ./worker
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push speedforce/multi-client
+  - docker push speedforce/multi-nginx
+  - docker push speedforce/multi-server
+  - docker push speedforce/multi-worker
